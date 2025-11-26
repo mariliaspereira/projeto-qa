@@ -19,15 +19,24 @@ O objetivo é demonstrar competências práticas de QA — tanto na escrita de t
 - Node.js  
 - Playwright  
 - JavaScript  
-- Markdown (documentação de testes manuais)  
+- VS Code / GitHub Codespaces 
 
 ---
 ## 📁 Estrutura do repositório projeto-qa/
-├── README.md ← este arquivo
-├── .gitignore ← arquivos/pastas ignoradas no Git
-├── casos_de_teste.md ← especificações manuais de teste
-├── cenarios_bdd.md ← cenários BDD escritos em texto
-└── automacao/tests ← testes automatizados
+projeto-qa/
+│
+├── automacao/
+│ ├── tests/
+│ │ ├── busca.spec.js
+│ │ ├── pagina_carrega.spec.js
+│ │ ├── login_valido.spec.js
+│ │ ├── login_invalido.spec.js
+│ │ └── clique_botao.spec.js
+│ └── playwright.config.js
+│
+├── casos_de_teste.md
+├── cenarios_bdd.md
+└── README.md
 
 ---
 
@@ -51,3 +60,13 @@ Para executar os testes:
 
 Se tudo estiver correto, você verá: 
   1 passed ...
+
+## 📝 Casos de Teste
+
+Os casos de teste completos estão no arquivo:
+👉 casos_de_teste.md
+
+## 🧩 Cenários BDD
+
+Os cenários em formato Given/When/Then estão em:
+👉 cenarios_bdd.md
