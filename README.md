@@ -27,10 +27,7 @@ O objetivo é demonstrar competências práticas de QA — tanto na escrita de t
 ├── .gitignore ← arquivos/pastas ignoradas no Git
 ├── casos_de_teste.md ← especificações manuais de teste
 ├── cenarios_bdd.md ← cenários BDD escritos em texto
-└── automacao/ ← testes automatizados
-└── tests/
-└── busca.spec.js ← teste de busca no Google como exemplo
-
+└── automacao/tests ← testes automatizados
 
 ---
 
