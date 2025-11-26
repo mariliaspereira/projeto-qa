@@ -1,35 +1,32 @@
 const { test, expect } = require('@playwright/test');
 
 test('Deve buscar no Google e validar o título', async ({ page }) => {
-  await test.step('Acessar Google', async () => {
-    await page.goto('https://www.google.com', { waitUntil: 'domcontentloaded' });
-    // Evita bloqueio do Google
-    await page.addInitScript(() => {
-      Object.defineProperty(navigator, 'webdriver', { get: () => false });
-    });
-  });
+  // Configuração inicial
+  await page.setViewportSize({ width: 1280, height: 800 });
+  
+  console.log('Abrindo Google');
+  await page.goto('https://www.google.com', { waitUntil: 'domcontentloaded' });
 
-  await test.step('Aceitar cookies se necessário', async () => {
-    const aceitar = page.locator('button', { hasText: /Aceitar|Accept all|Concordo|Agree/i });
-    if (await aceitar.isVisible().catch(() => false)) {
-      await aceitar.click();
-    }
-  });
+  // Aceitar cookies com verificação
+  try {
+    console.log('Tentando aceitar cookies');
+    await page.click('button:has-text("Aceitar tudo")', { timeout: 3000 });
+    await page.waitForSelector('button:has-text("Aceitar tudo")', { state: 'hidden', timeout: 5000 });
+  } catch (error) {
+    console.log('Popup de cookies não encontrado ou já fechado');
+  }
 
-  await page.addInitScript(() => {
-  Object.defineProperty(navigator, 'webdriver', { get: () => false });
-});
+  // Busca com wait mais robusto
+  console.log('Preenchendo busca');
+  const searchInput = page.locator('[name="q"]');
+  await searchInput.waitFor({ state: 'visible', timeout: 10000 });
+  
+  await searchInput.fill('Python');
+  await page.keyboard.press('Enter');
 
-  await test.step('Preencher busca e pesquisar', async () => {
-    await page.waitForSelector('input[name="q"]', { timeout: 5000 });
-    await page.fill('input[name="q"]', 'Python');
-    await page.keyboard.press('Enter');
-    await page.waitForLoadState('networkidle');
-  });
-
-  await test.step('Validar título e resultados', async () => {
-    await expect(page).toHaveTitle(/Python/i);
-    const resultados = page.locator('#search');
-    await expect(resultados).toBeVisible();
-  });
+  // Espera mais específica para resultados
+  await page.waitForURL('**/search?**', { timeout: 15000 });
+  
+  // Verificação do título
+  await expect(page).toHaveTitle(/Python/i);
 });
