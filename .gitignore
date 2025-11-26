@@ -1,0 +1,15 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Playwright / testes automatizados
+test-results/
+playwright-report/
+.env
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
